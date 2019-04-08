@@ -17,36 +17,36 @@ $("#add-actor").on("click", function(event) {
     renderButtons();
   });
 
+  function makeImage(obj){
+    return `
+      <div>
+        <p>Rating: ${obj.rating}</p>
+        <img src="${obj.images.fixed_height.url}" /> 
+      </div>
+    `
+  }
 
 
 
   $(document).on('click', '.role', function() {
     var time = $(this).text();
     console.log(time);
-    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=5w2DMI6qhLMH2Py6K94gID9JOICPnvaW&tag=" + time;
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + time +"&api_key=5w2DMI6qhLMH2Py6K94gID9JOICPnvaW&limit=10";
     $.ajax({
   url: queryURL,
   method: "GET"
 }).then(function(response) {
 
+    $('#images').prepend(response.data.map(makeImage))
 
-    function makeGif(){
-        var imageUrl = response.data.image_original_url;
-        var actImage = $("<img>");
-        actImage.attr("src", imageUrl);
-          actImage.attr("alt", "actor image");
 
-          //
-          $("#images").prepend(actImage);
-      }
 
-      $('#ratings').html(makeGif)
-      console.log(response);
+      console.log(response.data);
 
 
     });
       });
-      // Calling the renderButtons function to display the initial list of movies
+  
       renderButtons();
 
 
