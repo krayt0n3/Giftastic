@@ -18,14 +18,15 @@ $("#add-actor").on("click", function(event) {
   });
 
   function makeImage(obj){
+      
     return `
-      <div>
+      
+        <img src="${obj.images.fixed_height.url}" />
         <p>Rating: ${obj.rating}</p>
-        <img src="${obj.images.fixed_height.url}" /> 
-      </div>
-    `
-  }
 
+    `
+    
+  }
 
 
   $(document).on('click', '.role', function() {
@@ -36,18 +37,9 @@ $("#add-actor").on("click", function(event) {
   url: queryURL,
   method: "GET"
 }).then(function(response) {
-
     $('#images').prepend(response.data.map(makeImage))
-
-
-
       console.log(response.data);
-
-
     });
       });
-  
       renderButtons();
-
-
 })
