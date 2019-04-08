@@ -23,7 +23,7 @@ $("#add-actor").on("click", function(event) {
   $(document).on('click', '.role', function() {
     var time = $(this).text();
     console.log(time);
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + time + "&api_key=5w2DMI6qhLMH2Py6K94gID9JOICPnvaW&limit=1";
+    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=5w2DMI6qhLMH2Py6K94gID9JOICPnvaW&tag=" + time;
     $.ajax({
   url: queryURL,
   method: "GET"
@@ -31,14 +31,16 @@ $("#add-actor").on("click", function(event) {
 
 
     function makeGif(){
-        for (var i = 0; i < response.data.length; i++){
-            return `
-            <h2>${response.data[i].rating}</h2>
-            ` 
-        }
+        var imageUrl = response.data.image_original_url;
+        var actImage = $("<img>");
+        actImage.attr("src", imageUrl);
+          actImage.attr("alt", "actor image");
+
+          //
+          $("#images").prepend(actImage);
       }
 
-      $('#gif-view').html(makeGif)
+      $('#ratings').html(makeGif)
       console.log(response);
 
 
