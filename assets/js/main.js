@@ -22,20 +22,10 @@ $("#add-actor").on("click", function(event) {
 
     return `
       <div class = animated>
-        <img src="${obj.images.downsized_large.url}"/>
+      <img src="${obj.images.fixed_height_still.url}" data-alternate="${obj.images.fixed_height.url}" />
         <p>Rating: ${obj.rating}</p>
     </div>
     `
-  }
-
-//won't recognize the img reference
-  function changeImage(obj) {
-    return `
-      <div class = still>
-        <img src="${obj.images.downsized_still.url}"/>
-    </div>
-    `
-    
   }
 
 
@@ -52,15 +42,15 @@ $("#add-actor").on("click", function(event) {
 
     $('#images').prepend(response.data.map(makeImage))
 
-    $(document).on('click', '.animated', function(obj) {
-
-      return `
-    <div class = animated>
-      <img src="${obj.images.original_still.url}"/>
-  </div>
-  `
-  
-    });
+    $('img').on('click', function() {
+      var still = $(this).attr('src', $(this));
+      var animated = $(this).attr('src', $(this).attr('data-alternate'));
+      if(still) {
+      $(this).attr('src', $(this).attr('data-alternate'))
+      } else if (animated) {
+        $(this).attr('src', $(this));
+      }
+    })
     
       console.log(response.data);
     });
