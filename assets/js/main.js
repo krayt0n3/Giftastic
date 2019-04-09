@@ -1,5 +1,5 @@
 $( window ).on( "load", function() {
-
+//get buttons on page
 var topics = ['keanu reeves', 'joe pesci', 'ving rhames', 'bruce willis', 'john travolta', 'samuel jackson', 'uma thurman'];
 
 function makeButton(topics){
@@ -16,19 +16,30 @@ $("#add-actor").on("click", function(event) {
     $('#buttons-view').append(topics.push(text))
     renderButtons();
   });
+// and push out more
 
   function makeImage(obj){
-      
-    return `
-      
-        <img src="${obj.images.fixed_height.url}" />
-        <p>Rating: ${obj.rating}</p>
 
+    return `
+      <div class = animated>
+        <img src="${obj.images.downsized_large.url}"/>
+        <p>Rating: ${obj.rating}</p>
+    </div>
+    `
+  }
+
+//won't recognize the img reference
+  function changeImage(obj) {
+    return `
+      <div class = still>
+        <img src="${obj.images.downsized_still.url}"/>
+    </div>
     `
     
   }
 
 
+  
   $(document).on('click', '.role', function() {
     var time = $(this).text();
     console.log(time);
@@ -37,9 +48,27 @@ $("#add-actor").on("click", function(event) {
   url: queryURL,
   method: "GET"
 }).then(function(response) {
+
+
     $('#images').prepend(response.data.map(makeImage))
+
+    $(document).on('click', '.animated', function(obj) {
+
+      return `
+    <div class = animated>
+      <img src="${obj.images.original_still.url}"/>
+  </div>
+  `
+  
+    });
+    
       console.log(response.data);
     });
+
+    
       });
+
+
+
       renderButtons();
-})
+});
