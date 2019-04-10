@@ -22,7 +22,7 @@ $("#add-actor").on("click", function(event) {
 
     return `
       <div class = animated>
-      <img src="${obj.images.fixed_height_still.url}" data-alternate="${obj.images.fixed_height.url}" />
+      <img src="${obj.images.fixed_height_still.url}" data-alternate="${obj.images.fixed_height.url}" data-still="${obj.images.fixed_height_still.url}"/>
         <p>Rating: ${obj.rating}</p>
     </div>
     `
@@ -42,15 +42,11 @@ $("#add-actor").on("click", function(event) {
 
     $('#images').prepend(response.data.map(makeImage))
 
-    $('img').on('click', function() {
-      var still = $(this).attr('src', $(this));
-      var animated = $(this).attr('src', $(this).attr('data-alternate'));
-      if(still) {
-      $(this).attr('src', $(this).attr('data-alternate'))
-      } else if (animated) {
-        $(this).attr('src', $(this));
-      }
-    })
+    $('img').on('click', function(e) {
+      
+    $(this).attr('src', $(this).attr('data-alternate'))
+      
+    });
     
       console.log(response.data);
     });
